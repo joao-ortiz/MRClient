@@ -1,0 +1,22 @@
+.result-container {
+    position: relative;
+    align-self: flex-start;
+}
+.vote-users-list {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #0e326b;
+    border: solid 1px whitesmoke;
+    border-radius: 5px;
+    padding: 2px;
+    z-index: 1;
+}
+.result-container:hover .vote-users-list {
+    display: flex;
+}
+p .user-name {
+    margin-bottom: 5px;
+}

@@ -1,0 +1,15 @@
+.options-list-container {
+    margin-top: 5px;
+    display: flex;
+    padding: 5px;
+}
+
+.options-list-container .option-card-container {
+    margin-right: 5px;
+}
+
+.options-await-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

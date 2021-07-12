@@ -1,0 +1,26 @@
+.option-card-container {
+    margin-top: 5px;
+    padding: 10px 5px;
+    display: flex;
+    background-color: #0e326b;
+    border: solid 1px whitesmoke;
+    border-radius: 10px;
+    justify-content: space-between;
+}
+
+.option-title {
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.option-description {
+    padding-bottom: 5px;
+    width: 145px;
+    word-wrap: break-word;
+    margin-right: 5px;
+}
+
+.option-card-container .input-button{
+    align-self: flex-end;
+}

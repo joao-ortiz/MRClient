@@ -1,0 +1,9 @@
+.pool-options-manager{
+    display: flex;
+    flex-direction: column;
+}
+.actions {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}

@@ -1,0 +1,16 @@
+.login-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    padding: 10px 5px;
+}
+
+.login-container .input-button {
+    align-self: flex-end;
+}
+
+h1 .title {
+    font-size: 28px;
+}
