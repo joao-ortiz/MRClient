@@ -34,15 +34,13 @@ const PoolOptionsList = () => {
         const votePayload = {optionId,user: {userId:currentUserSelect.id, userName:currentUserSelect.userName}}
 
         socket.emit("Vote", votePayload)
-            dispatch(userVote(votePayload))
-        
+
         setAlreadyVote(true)
     }
 
     const handleRemoveVote = () => {
         const userId = currentUserSelect.id
         socket.emit("RemoveVote", userId)
-            dispatch(removeUserVote(userId))
         
         setAlreadyVote(false)
     }
