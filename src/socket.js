@@ -4,7 +4,7 @@ import { addUser, removeUser, setUsers } from './reducers/usersSlice'
 import { userIsHost, setUserId } from './reducers/currentUserSlice'
 import { setPoolOptions, userVote, removeUserVote } from './reducers/poolSlice'
 
-const socket = io('http://localhost:8888', { transports: ["websocket"] })
+const socket = io('https://fast-spire-57423.herokuapp.com', { transports: ["websocket"] })
 
 const {dispatch} = store
 
