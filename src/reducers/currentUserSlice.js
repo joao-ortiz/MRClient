@@ -15,7 +15,7 @@ const currentUserSlice = createSlice({
             state.userName = action.payload
         },
         userSpoke(state) {
-            state.alreadySpoke = true
+            state.alreadySpoke = !state.alreadySpoke
         },
         userIsHost(state) {
             state.type = 'host'

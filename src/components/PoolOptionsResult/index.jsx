@@ -28,6 +28,7 @@ const PoolOptionsResult = () => {
     
     return(
         <div className="results-container">
+            <h3 style={{"position" : "absolute", "top": "-20px"}}>Pool results.</h3>
             {renderResults()}
         </div>
     )

@@ -36,9 +36,15 @@ const RoomManager = () => {
         socket.emit("EndVotingSesh")
     }
 
+    const handleRoomMode = mode => {
+        socket.emit("SetRoomMode", mode)
+    }
+
     return(
         <div className="manager-container">
             <h2 style={{"margin-bottom": "5px"}} >Room manager</h2>
+            <input className="input-button" type="button" value="Change room to Call" onClick={() => {handleRoomMode("call")}} />
+            <input className="input-button" type="button" value="Change room to Voting" onClick={() => {handleRoomMode("vote")}} />
             <input className="input-button" type="button" value="Select user to speak" onClick={handleMetingManage} />
             {showUserList && <UsersToSpeakList users={[currentUserSelect, ...usersSelect]} hide={() => setShowUserList(false)} />}
 

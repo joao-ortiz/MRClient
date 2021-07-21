@@ -1,6 +1,7 @@
 .results-container {
     display: flex;
     padding: 5px;
+    position: relative;
 }
 
 .results-container .option-card-container {

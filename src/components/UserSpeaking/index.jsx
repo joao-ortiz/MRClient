@@ -18,6 +18,7 @@ const UserSpeaking = () => {
     const handleNewICECandidateRef = useRef()
     const handleNewUserToSpeakRef = useRef()
     const handleReceivingSignalRef = useRef()
+    const handleEndCallRef = useRef()
 
     const currentUserSelect = useSelector(state => state.currentUser)
     const usersSelect = useSelector(state => state.users)
@@ -30,7 +31,7 @@ const UserSpeaking = () => {
         if (user.id) {
             return <div><h3>Current user speaking</h3><UserCard speaking={true} user={user} /></div>
         }
-        return <span>Wait until the host start the meeting.</span>
+        return <span>There is no user speaking.</span>
     }
 
     const addVideoStream = (video, stream) => {
@@ -146,7 +147,6 @@ const UserSpeaking = () => {
 
     const closeConnections = () => {
         const userStream = myStreamRef.current
-        console.log(userStream.getTracks()[0]);
         if (userStream.active) {
             userStream.getTracks()[0].stop()
         }
@@ -178,11 +178,17 @@ const UserSpeaking = () => {
         addVideoStream(videoRef.current, e.streams[0])
     }
 
+    const handleEndCall = () => {
+        setUser({})
+        setPeers([])
+    }
+
     videoRef.current = video
     handleAnswerRef.current = handleAnswer
     handleNewICECandidateRef.current = handleNewICECandidate
     handleNewUserToSpeakRef.current = handleNewUserToSpeak
     handleReceivingSignalRef.current = handleReceivingSignal
+    handleEndCallRef.current = handleEndCall
 
     useEffect(() => {
         socket.on('Signal', data => {
@@ -202,7 +208,10 @@ const UserSpeaking = () => {
         socket.on("NewICECandidate", payload => {
             handleNewICECandidateRef.current(payload)
         })
-    
+        
+        socket.on("EndCall", () => {
+            handleEndCallRef.current()
+        })
     },[])
     return (
         <div className="user-speaking-container">

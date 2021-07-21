@@ -24,9 +24,14 @@ const usersSlice = createSlice({
         setUsers(state, action) {
             return state = action.payload
         },
+        resetSpoke(state) {
+            return state.forEach(user => {
+                user.alreadySpoke = false
+            })
+        }
     }
 })
 
-export const {addUser, removeUser, userSpoke, setUsers} = usersSlice.actions
+export const {addUser, removeUser, userSpoke, setUsers, resetSpoke} = usersSlice.actions
 
 export default usersSlice.reducer

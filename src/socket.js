@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client'
 import store from './store'
-import { addUser, removeUser, setUsers } from './reducers/usersSlice'
+import { addUser, removeUser, resetSpoke, setUsers } from './reducers/usersSlice'
 import { userIsHost, setUserId } from './reducers/currentUserSlice'
 import { setPoolOptions, userVote, removeUserVote } from './reducers/poolSlice'
 
@@ -40,5 +40,7 @@ socket.on('RemoveVote', data => {
     dispatch(removeUserVote(data))
 })
 
-
+socket.on('ResetSpokeState', () => {
+    dispatch(resetSpoke())
+})
 export default socket

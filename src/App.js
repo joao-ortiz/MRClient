@@ -9,12 +9,15 @@ function App() {
   const currentUserSelect = useSelector(state=> state.currentUser)
 
   const renderLoginIfThereIsNoUser = () => {
-    console.log(currentUserSelect);
     if (currentUserSelect.userName !== '') {
       return <Room mode ={mode} />
     }
     return <Login />
   }
+
+  socket.on("SetRoomMode", mode => {
+    setMode(mode)
+  })
 
   socket.on("NewVotingSesh", () => {
     setMode("vote")

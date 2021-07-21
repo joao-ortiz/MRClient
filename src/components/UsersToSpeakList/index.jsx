@@ -4,17 +4,22 @@ import './index.css'
 
 const UsersToSpeakList = ({users, closeConnections, hide}) => {
     const usersToSpeak = (users) => {
-        return users.map( user => {
-            if (!user.alreadySpoke) {
+        const userList = users.filter(user => {
+            return !user.alreadySpoke
+        })
+        console.log(userList);
+        if (userList.length) {
+            return userList.map( user => {
                 return (
-                    <div key={String(Math.random()).substr(2,9)} className="card-container">
-                        <UserCard key={String(Math.random()).substr(2,9)} user={user} />
+                    <div key={user.id} className="card-container">
+                        <UserCard user={user} />
                         <input className="input-button" onClick={() => {handlePass(user)}} type="button" value="choose" />
                     </div>
                 )
-            }
-            return null
-        })
+            })
+        }else {
+           return <input className="input-button" onClick={handleEnd} type="button" value="End call" />
+        }
     }
 
     const handlePass = user => {
@@ -25,6 +30,12 @@ const UsersToSpeakList = ({users, closeConnections, hide}) => {
         hide()
     }
     
+    const handleEnd = () => {
+        closeConnections()
+        socket.emit("EndCall")
+        hide()
+    }
+
     return (
         <div className="fade" >
             <div className="users-to-speak-list">

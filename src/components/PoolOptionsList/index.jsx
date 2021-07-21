@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import { useDispatch } from "react-redux"
 import socket from "../../socket"
-import { userVote, removeUserVote } from "../../reducers/poolSlice"
 import { useSelector } from 'react-redux'
 import PoolOptionCard from '../PoolOptionCard'
 import "./index.css"
@@ -11,9 +9,7 @@ const PoolOptionsList = () => {
     const poolOptionsSelect = useSelector(state => state.pool)
     
     const [alreadyVote, setAlreadyVote] = useState(false)
-    
-    const dispatch = useDispatch()
-
+    const [selectedOption, setOption] = useState('')
     const renderPool = () => {
         if(alreadyVote) {
             return <div className="options-await-container">
@@ -31,16 +27,18 @@ const PoolOptionsList = () => {
     }
 
     const handleVote = (optionId) => {
-        const votePayload = {optionId,user: {userId:currentUserSelect.id, userName:currentUserSelect.userName}}
-
+        const votePayload = {optionId, user: {userId:currentUserSelect.id, userName:currentUserSelect.userName}}
         socket.emit("Vote", votePayload)
 
+        setOption(optionId)
         setAlreadyVote(true)
     }
 
     const handleRemoveVote = () => {
         const userId = currentUserSelect.id
-        socket.emit("RemoveVote", userId)
+        const optionId = selectedOption
+        
+        socket.emit("RemoveVote", {userId, optionId})
         
         setAlreadyVote(false)
     }
