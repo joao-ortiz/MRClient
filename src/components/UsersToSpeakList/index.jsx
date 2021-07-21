@@ -4,12 +4,8 @@ import './index.css'
 
 const UsersToSpeakList = ({users, closeConnections, hide}) => {
     const usersToSpeak = (users) => {
-        const userList = users.filter(user => {
-            return !user.alreadySpoke
-        })
-        console.log(userList);
-        if (userList.length) {
-            return userList.map( user => {
+        if (users.length) {
+            return users.map( user => {
                 return (
                     <div key={user.id} className="card-container">
                         <UserCard user={user} />

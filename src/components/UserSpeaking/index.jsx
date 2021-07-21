@@ -22,7 +22,8 @@ const UserSpeaking = () => {
 
     const currentUserSelect = useSelector(state => state.currentUser)
     const usersSelect = useSelector(state => state.users)
-    
+    const usersToSpeak = usersSelect.filter(user => !user.alreadySpoke)
+
     const dispatch = useDispatch()
 
     const video = document.createElement('video')
@@ -181,6 +182,7 @@ const UserSpeaking = () => {
     const handleEndCall = () => {
         setUser({})
         setPeers([])
+        setIsCurrentUser(false)
     }
 
     videoRef.current = video
@@ -220,7 +222,7 @@ const UserSpeaking = () => {
             <video autoPlay={true} id="video-secret-container"></video>
             {isCurrentUser && <input value="Select next user" className="input-button" type="button" onClick={() => setShowUserList(true)} />}
 
-            {showUserList && <UsersToSpeakList users={usersSelect} closeConnections={closeConnections} hide={() => setShowUserList(false)} />}
+            {showUserList && <UsersToSpeakList users={usersToSpeak} closeConnections={closeConnections} hide={() => setShowUserList(false)} />}
         </div>
     )
 }

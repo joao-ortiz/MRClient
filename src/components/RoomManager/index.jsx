@@ -28,11 +28,11 @@ const RoomManager = () => {
     }
 
     const handleStartVoting = (options) => {
-        setCount(0)
         socket.emit("PoolOptions", options)
     }
 
     const handleEndVoting = () => {
+        setCount(0)
         socket.emit("EndVotingSesh")
     }
 
@@ -43,9 +43,8 @@ const RoomManager = () => {
     return(
         <div className="manager-container">
             <h2 style={{"margin-bottom": "5px"}} >Room manager</h2>
-            <input className="input-button" type="button" value="Change room to Call" onClick={() => {handleRoomMode("call")}} />
-            <input className="input-button" type="button" value="Change room to Voting" onClick={() => {handleRoomMode("vote")}} />
-            <input className="input-button" type="button" value="Select user to speak" onClick={handleMetingManage} />
+            <input style={{"margin-bottom": "5px"}} className="input-button" type="button" value="Change room to Call" onClick={() => {handleRoomMode("call")}} />
+            <input style={{"margin-bottom": "5px"}} className="input-button" type="button" value="Select user to speak" onClick={handleMetingManage} />
             {showUserList && <UsersToSpeakList users={[currentUserSelect, ...usersSelect]} hide={() => setShowUserList(false)} />}
 
             <div className="voting-crud-container">
