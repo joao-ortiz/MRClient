@@ -1,0 +1,12 @@
+.user-point-card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 275px;
+    pointer-events: none;
+    margin-bottom: 15px;
+}
+
+.user-point-card-container  .user-name {
+    font-weight: bold;
+}

@@ -2,7 +2,7 @@ import { io } from 'socket.io-client'
 import store from './store'
 import { addUser, removeUser, resetSpoke, setUsers } from './reducers/usersSlice'
 import { userIsHost, setUserId } from './reducers/currentUserSlice'
-import { setPoolOptions, userVote, removeUserVote } from './reducers/poolSlice'
+import { removeUserPoint, userPoint } from './reducers/poolSlice'
 
 const socket = io('https://fast-spire-57423.herokuapp.com', { transports: ["websocket"] })
 
@@ -28,16 +28,13 @@ socket.on('UserDisconnect', user => {
     dispatch(removeUser(user))
 })
 
-socket.on('NewVotingSesh', poolOptions => {
-    dispatch(setPoolOptions(poolOptions))
+socket.on('UserPoint', data => {
+    dispatch(userPoint(data))
 })
 
-socket.on('UserVote', data => {
-    dispatch(userVote(data))
-})
-
-socket.on('RemoveVote', data => {
-    dispatch(removeUserVote(data))
+socket.on('RemovePoint', data => {
+    console.log(data);
+    dispatch(removeUserPoint(data))
 })
 
 socket.on('ResetSpokeState', () => {

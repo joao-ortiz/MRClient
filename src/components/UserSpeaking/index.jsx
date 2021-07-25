@@ -29,7 +29,7 @@ const UserSpeaking = () => {
     const video = document.createElement('video')
     
     const renderUserSpeaking = () => {
-        if (user.id) {
+        if (user.hasOwnProperty('id')) {
             return <div><h3>Current user speaking</h3><UserCard speaking={true} user={user} /></div>
         }
         return <span>There is no user speaking.</span>
@@ -37,57 +37,46 @@ const UserSpeaking = () => {
 
     const addVideoStream = (video, stream) => {
         video.srcObject = stream
-        console.log(video.srcObject);
-        console.log(video);
         video.onloadedmetadata = function(e) {
             video.play();
           };
     }
 
     const handleNewUserToSpeak = userId => {
+        setIsCurrentUser(userId === currentUserSelect.id)
         if (userId === currentUserSelect.id) {
-            setIsCurrentUser(true)
             setUser(currentUserSelect)
             streamToRoomUsers(usersSelect)
         } else {
-            setIsCurrentUser(false)
-            console.log("bbbbb");
-            usersSelect.forEach(user => {
-                if (userId === user.id) {
-                    setUser(user)
-                }
-            });
-
+            setUser(usersSelect.find(user => user.id === userId));
             dispatch(userSpoke(userId))
         }
 
     }
 
     function streamToRoomUsers(users) {
-        const newPeers = []
-        console.log(users);
         navigator.mediaDevices.getUserMedia({
             video: false,
             audio: true,
           }).then(stream => {
             myStreamRef.current = stream
             const streamTrack = stream.getAudioTracks()[0]
-            users.forEach(user => {
-                const peer = createPeer(user.id, stream)
-                peer.addTrack(streamTrack, stream)
-                console.log("peer track", peer);
-                newPeers.push({peer, id: user.id})
-            })
-            setPeers(newPeers)
+            setPeers(createPeersList(users, streamTrack, stream))
           })
-          
+    }
+
+    const createPeersList = (users, streamTrack, stream) => {
+        return users.map(user => {
+            let peer = createPeer(user.id, stream)
+            peer.addTrack(streamTrack, stream)
+            return {peer, id: user.id}
+        })
     }
 
     const handleAnswer = (message) => {
-        
         const desc = new RTCSessionDescription(message.sdp)
         const {peer} = peers.find(p => p.id === message.answerId)
-        console.log("answer",message, peer);
+        
         peer.setRemoteDescription(desc).catch(e => console.log(e))
     }
 
@@ -104,7 +93,6 @@ const UserSpeaking = () => {
                 },
             ]
         })
-        console.log("userId on create peer",userId);
         peer.onicecandidate = (e) => handleICECandiadate(e, userId);
         peer.ontrack = handleTrack
         peer.onnegotiationneeded = () => handleNegotiationNeeded(userId, peer)
@@ -116,12 +104,7 @@ const UserSpeaking = () => {
         peer.createOffer().then(offer => {
             return peer.setLocalDescription(offer)
         }).then( ()=> {
-            const payload = {
-                target: userId,
-                caller: currentUserSelect.id,
-                sdp: peer.localDescription
-            }
-            console.log("negotiation", payload);
+            const payload = createPeerSDPResponse(userId, currentUserSelect.id, peer.localDescription)
             socket.emit("Offer", payload)
         }).catch(e => console.log(e))
 
@@ -135,27 +118,29 @@ const UserSpeaking = () => {
         }).then(answear => {
             return peer.setLocalDescription(answear)
         }).then(() => {
-            const payload = {
-                target: callerId,
-                caller: currentUserSelect.id,
-                sdp: peer.localDescription
-            }
-            console.log("handleREceiving", payload);
+            const payload = createPeerSDPResponse(callerId, currentUserSelect.id, peer.localDescription)
             socket.emit("Answer", payload)
         })
         return peer
     }
 
+    const createPeerSDPResponse = (target, caller, sdp) => {
+        return { target, caller, sdp }
+    }
+
     const closeConnections = () => {
-        const userStream = myStreamRef.current
-        if (userStream.active) {
-            userStream.getTracks()[0].stop()
-        }
+        closeStream()
         peers.forEach(i => {
             i.peer.close()
         })
     }
 
+    const closeStream = () => {
+        const userStream = myStreamRef.current
+        if (userStream.active) {
+            userStream.getTracks()[0].stop()
+        }
+    }
     const handleICECandiadate = (e, userId) => {
         if (e.candidate) {
             const payload ={
@@ -168,20 +153,19 @@ const UserSpeaking = () => {
 
     const handleNewICECandidate = incoming => {
         const candidate = new RTCIceCandidate(incoming.candidate)
-        console.log("new ice", incoming, "peers", peers);
         const {peer} = peers.find(p => p.id === incoming.iceId)
 
         peer.addIceCandidate(candidate).catch(e => console.log(e))
     }
 
     const handleTrack = e => {
-        console.log("stream arrived", e);
         addVideoStream(videoRef.current, e.streams[0])
     }
 
     const handleEndCall = () => {
         setUser({})
         setPeers([])
+        closeStream()
         setIsCurrentUser(false)
     }
 

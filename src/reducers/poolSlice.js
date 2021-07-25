@@ -6,43 +6,20 @@ const poolSlice = createSlice({
     name: 'pool',
     initialState,
     reducers: {
-        setPoolOptions(state, action) {
-            return state = action.payload
-        },
-        addOption(state, action) {
+        userPoint(state, action) {
             state.push(action.payload)
         },
-        removeOption(state, action) {
-            return state = state.filter( option => {
-                return option.id !== action.payload
+        removeUserPoint(state, action) {
+            return state.filter(point => {
+                return point.user.id !== action.payload
             })
         },
-        updateOption(state, action) {
-            state.forEach(option => {
-                if (option.id === action.payload.id) {
-                    option = action.payload
-                }
-            })
-        },
-        userVote(state, action) {
-            state.forEach(option => {
-                if (option.id === action.payload.optionId) {
-                    option.votes.push(action.payload.user)
-                }
-            })
-        },
-        removeUserVote(state, action) {
-            state.forEach(option => {
-                if (option.id === action.payload.optionId) {
-                    option.votes = option.votes.filter(vote => {
-                        return vote.userId !== action.payload.userId
-                    })
-                }
-            })
+        clearVotes(state) {
+            return []
         }
     }
 })
 
-export const {setPoolOptions, addOption, removeOption, updateOption, userVote, removeUserVote} = poolSlice.actions
+export const {userPoint, clearVotes, removeUserPoint} = poolSlice.actions
 
 export default poolSlice.reducer

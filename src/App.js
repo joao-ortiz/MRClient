@@ -18,14 +18,6 @@ function App() {
   socket.on("SetRoomMode", mode => {
     setMode(mode)
   })
-
-  socket.on("NewVotingSesh", () => {
-    setMode("vote")
-  })
-
-  socket.on("VotingResults", () => {
-    setMode("results")
-  })
   
   return (
     <div className="App">

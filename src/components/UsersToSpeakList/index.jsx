@@ -19,7 +19,7 @@ const UsersToSpeakList = ({users, closeConnections, hide}) => {
     }
 
     const handlePass = user => {
-        if ( closeConnections) {
+        if (closeConnections) {
             closeConnections()
         }
         socket.emit('NextUserToSpeak', user.id)
@@ -35,7 +35,7 @@ const UsersToSpeakList = ({users, closeConnections, hide}) => {
     return (
         <div className="fade" >
             <div className="users-to-speak-list">
-            <span className="close-button" onClick={hide}>x</span>
+                <span className="close-button" onClick={hide}>x</span>
                 <h2 className="list-title">Choose the next user to speak </h2>
                 <div className="list-container">{usersToSpeak(users)}</div>
             </div>

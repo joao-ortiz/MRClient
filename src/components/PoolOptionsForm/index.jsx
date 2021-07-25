@@ -1,14 +1,8 @@
-import { useState } from 'react'
-import { nanoid } from '@reduxjs/toolkit'
+
 import "./index.css"
 
-const PoolOptionsForm = ({handleAdd}) => {
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
+const PoolOptionsForm = ({title, description, setDescription, setTitle}) => {
 
-    const option = () => {
-        return { id: nanoid(), title, description , votes: []}
-    }
     return(
         <div className="pool-option-form">
             <div className="input-container">
@@ -21,11 +15,6 @@ const PoolOptionsForm = ({handleAdd}) => {
                 <label htmlFor="description" className="input-field-label">Description</label>
             </div>
 
-            <input className="input-button" type="button" value="Add Option" onClick={() => {
-                handleAdd(option());
-                setTitle("");
-                setDescription("");
-            }} />
         </div>
     )
 }

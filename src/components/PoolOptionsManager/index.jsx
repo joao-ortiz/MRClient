@@ -1,38 +1,22 @@
 import { useState } from "react"
-import PoolOptionCard from "../PoolOptionCard"
 import PoolOptionsForm from "../PoolOptionsForm"
 import "./index.css"
 
 const PoolOptionsManager = ({start, end}) => {
-    const [options, setOptions] = useState([])
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
 
-    const handleDelete = (optionId) => {
-        setOptions(options => options.filter(o => o.id !== optionId))
-    }
-
-    const handleAdd = (option) => {
-        if(option.title.length) {
-            setOptions(options => [...options, option])
-    }else {
-        window.alert("You need to fill at least the title")
-    }
-
-        }
-        
-
-    const renderPoolOptions = () => {
-        return options.map(option => {
-            return <PoolOptionCard key={option.id} option={option} handleDelete={handleDelete} />
-        })
+    const story = () => {
+        return {title, description}
     }
 
     return (
         <div className="pool-options-manager">
-            <PoolOptionsForm handleAdd={handleAdd} />
-            {renderPoolOptions()}
+            <h2 style={{"marginBottom": "5px"}} >Create a story!</h2>
+            <PoolOptionsForm title={title} description={description} setTitle={setTitle} setDescription={setDescription} />
             <div className="actions">
-                <input type="button" value="Start" onClick={() => start(options)} className="input-button" />
-                <input style={{"margin-top": "5px"}} type="button" value="Show Results" onClick={end} className="input-button" />
+                <input type="button" value="Start pointing" onClick={() => start(story())} className="input-button" />
+                <input style={{"marginTop": "5px"}} type="button" value="Show results" onClick={end} className="input-button" />
             </div>
         </div>
     )

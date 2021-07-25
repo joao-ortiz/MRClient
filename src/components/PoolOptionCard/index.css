@@ -1,4 +1,4 @@
-.option-card-container {
+.story-card-container {
     margin-top: 5px;
     padding: 10px 5px;
     display: flex;
@@ -8,19 +8,19 @@
     justify-content: space-between;
 }
 
-.option-title {
+.story-title {
     font-size: 18px;
     font-weight: bold;
     padding-bottom: 5px;
 }
 
-.option-description {
+.story-description {
     padding-bottom: 5px;
-    width: 145px;
+    max-width: 145px;
     word-wrap: break-word;
     margin-right: 5px;
 }
 
-.option-card-container .input-button{
+.story-card-container .input-button{
     align-self: flex-end;
 }
