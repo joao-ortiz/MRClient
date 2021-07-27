@@ -1,7 +1,6 @@
 import UserList from '../UserList'
 import UserSpeaking from '../UserSpeaking'
-import PoolOptionsList from '../PoolOptionsList'
-import PoolOptionsResult from '../PoolOptionsResult'
+import PointingPoker from '../PointingPoker'
 import RoomManager from '../RoomManager'
 import { useSelector } from 'react-redux'
 import "./index.css"
@@ -13,10 +12,8 @@ const Room = ({mode}) => {
     const renderRoomMode = () => {
         if(mode === "call") {
             return <UserSpeaking />
-        } else if (mode === "results") {
-            return <PoolOptionsResult />
         }
-        return <PoolOptionsList />
+        return <PointingPoker />
     }
 
     return (

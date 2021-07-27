@@ -1,9 +1,0 @@
-.results-container {
-    display: flex;
-    padding: 5px;
-    position: relative;
-}
-
-.results-container .option-card-container {
-    margin-right: 5px;
-}

@@ -1,7 +1,7 @@
 
 import "./index.css"
 
-const PoolOptionsForm = ({title, description, setDescription, setTitle}) => {
+const StoryForm = ({title, description, setDescription, setTitle}) => {
 
     return(
         <div className="pool-option-form">
@@ -19,4 +19,4 @@ const PoolOptionsForm = ({title, description, setDescription, setTitle}) => {
     )
 }
 
-export default PoolOptionsForm
+export default StoryForm

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useSelector } from 'react-redux'
 import UsersToSpeakList from "../UsersToSpeakList"
 import socket from '../../socket'
-import PoolOptionsManager from "../PoolOptionsManager"
+import StoryManager from "../StoryManager"
 import "./index.css"
 
 const RoomManager = () => {
@@ -37,7 +37,7 @@ const RoomManager = () => {
 
             <div className="voting-crud-container">
                 <h3>Manage pointing sesh.</h3>
-                <PoolOptionsManager start={handleStartVoting} end={handleEndVoting} />
+                <StoryManager start={handleStartVoting} end={handleEndVoting} />
             </div>
             
         </div>

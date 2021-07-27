@@ -2,12 +2,12 @@ import { useState } from 'react'
 import socket from "../../socket"
 import { useSelector, useDispatch } from 'react-redux'
 import { clearVotes } from '../../reducers/poolSlice'
-import PoolOptionCard from '../PoolOptionCard'
+import StoryCard from '../StoryCard'
 import UserPointCard from '../UserPointCard'
 import PointCard from '../PointCard'
 import "./index.css"
 
-const PoolOptionsList = () => {
+const PointingPoker = () => {
     const currentUserSelect = useSelector(state => state.currentUser)
     const poolSlice = useSelector(state => state.pool)
 
@@ -18,21 +18,17 @@ const PoolOptionsList = () => {
     const dispatch = useDispatch()
 
     socket.on("Results", () => {
-        console.log("results", show);
         setShow(true)
     })
 
     socket.on("SetStory", story => {
-        if (alreadyVote) {
-            console.log("yikes");
-            setAlreadyVote(false)
-            setShow(false)
-            dispatch(clearVotes())
-        }
+        setAlreadyVote(false)
+        setShow(false)
+        dispatch(clearVotes())
         setStory(story)
     })
 
-    const renderPool = () => {
+    const renderPointsInteractions = () => {
         if(alreadyVote) {
             return <div className="options-await-container">
                     {show ? <h3 style={{"marginBottom" : "5px"}}>Results!.</h3> :<h3 style={{"marginBottom" : "5px"}}>Waiting for host to end pointing.</h3>}
@@ -42,7 +38,7 @@ const PoolOptionsList = () => {
         }
         return <div>
                 <h3>Point an apropriatte value for the story:</h3>
-                <PoolOptionCard story={story} />
+                <StoryCard story={story} />
                 <div className="options-list-container">{renderPoolOptions()}</div>
             </div> 
     }
@@ -83,9 +79,9 @@ const PoolOptionsList = () => {
 
     return(
         <div >
-            {renderPool()}
+            {renderPointsInteractions()}
         </div>
     )
 }
 
-export default PoolOptionsList
+export default PointingPoker

@@ -1,6 +1,6 @@
 import "./index.css"
 
-const PoolOptionCard = ({story, handleDelete}) => {
+const StoryCard = ({story, handleDelete}) => {
     const renderCardExtra = () => {
         if(handleDelete) {
             return <input type="button" className="input-button" onClick={handleDelete} value="Delete" />
@@ -18,4 +18,4 @@ const PoolOptionCard = ({story, handleDelete}) => {
     )
 }
 
-export default PoolOptionCard
+export default StoryCard
